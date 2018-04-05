@@ -4,9 +4,10 @@ const BACKSPACE = 8,
 	LEFT = 37,
 	RIGHT = 39,
 	DELETE = 46,
-	COMMA = 188;
+	COMMA = 188,
+    SEMICOLON = 186;
 
-const SEPERATOR = ',';
+const SEPARATOR = ',';
 
 const COPY_PROPS = 'placeholder pattern spellcheck autocomplete autocapitalize autofocus accessKey accept lang minLength maxLength required'.split(' ');
 
@@ -29,7 +30,7 @@ export default function tagsInput(input) {
 		return $('.tag', true)
 			.map( tag => tag.textContent )
 			.concat(base.input.value || [])
-			.join(SEPERATOR);
+			.join(SEPARATOR);
 	}
 
 	function setValue(value) {
@@ -45,7 +46,7 @@ export default function tagsInput(input) {
 	// Return false if no need to add a tag
 	function addTag(text) {
 		// Add multiple tags if the user pastes in data with SEPERATOR already in it
-		if (~text.indexOf(SEPERATOR)) text = text.split(SEPERATOR);
+		if (~text.indexOf(SEPARATOR)) text = text.split(SEPARATOR);
 		if (Array.isArray(text)) return text.forEach(addTag);
 
 		let tag = text && text.trim();
@@ -160,8 +161,8 @@ export default function tagsInput(input) {
 
 		setInputWidth();
 
-		if (key===ENTER || key===COMMA || key===TAB) {
-			if (!el.value && key!==COMMA) return;
+		if (key===ENTER || key===COMMA || key===TAB || key===SEMICOLON) {
+			if (!el.value && key!==COMMA && key!==SEMICOLON) return;
 			savePartialInput();
 		}
 		else if (key===DELETE && selectedTag) {
